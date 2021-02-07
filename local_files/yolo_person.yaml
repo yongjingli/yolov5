@@ -1,0 +1,45 @@
+#数据集路径配置
+# COCO 2017 dataset http://cocodataset.org
+# Download command: bash yolov5/data/get_coco2017.sh
+# Train command: python train.py --data coco.yaml
+# Default dataset location is next to /yolov5:
+#   /parent_folder
+#     /coco
+#     /yolov5
+
+
+# train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
+train: ./yolo_person/train2017.txt  # 118287 images
+val: ./yolo_person/val2017.txt  # 5000 images
+wider_person_train: ./yolo_person/wider_person_train.txt
+wider_person_val: ./yolo_person/wider_person_val.txt
+crowd_person_train: ./yolo_person/crowd_person_train.txt
+crowd_person_val: ./yolo_person/crowd_person_val.txt
+local1111_train: ./yolo_person/local1111_train.txt
+local1111_val: ./yolo_person/local1111_val.txt
+exdark_train: ./yolo_person/exdark_train.txt
+exdark_val: ./yolo_person/exdark_val.txt
+
+
+# part dataset for test model 
+part_train: ./yolo_person/part_train2017.txt  # 118287 images
+part_wider_person_train: ./yolo_person/part_wider_person_train.txt
+part_crowd_person_train: ./yolo_person/part_crowd_person_train.txt
+part_local1111_train: ./yolo_person/part_local1111_train.txt
+background: ./yolo_person/background.txt
+part_exdark_train: ./yolo_person/part_exdark_train.txt
+
+#test: ./coco_person_car/test-dev2017.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+
+# number of classes
+nc: 1
+
+# class names
+names: ['person']
+
+# Print classes
+# with open('data/coco.yaml') as f:
+#   d = yaml.load(f, Loader=yaml.FullLoader)  # dict
+#   for i, x in enumerate(d['names']):
+#     print(i, x)
+
