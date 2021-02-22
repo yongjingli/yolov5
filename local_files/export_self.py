@@ -42,6 +42,10 @@ if __name__ == '__main__':
     model = attempt_load(opt.weights, map_location=torch.device('cpu'))  # load FP32 model
     labels = model.names
 
+    nl = model.model[-1].nl
+    anchor_grid = model.model[-1].anchor_grid
+    anchors = anchor_grid.view(nl, -1)
+
     # Checks
     gs = int(max(model.stride))  # grid size (max stride)
     opt.img_size = [check_img_size(x, gs) for x in opt.img_size]  # verify img_size are gs-multiples
@@ -173,7 +177,8 @@ if __name__ == '__main__':
 
     except Exception as e:
         print('ONNX export failure: %s' % e)
-
+        
+    print('anchors"', anchors)
     # CoreML export
     # try:
     #     import coremltools as ct
