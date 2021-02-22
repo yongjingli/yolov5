@@ -177,9 +177,9 @@ def do_inference(context, bindings, inputs, outputs, stream, batch_size=1):
 
 
 class YoloDetectionTrt:
-    def __init__(self, onnx_file, batch_size=1):
+    def __init__(self, onnx_path, batch_size=1):
         print('YoloDetectionTrt Initial Start...')
-        self.onnx_file = onnx_file
+        self.onnx_file = onnx_path
         self.net_w = 640
         self.net_h = 640
         self.batch_size = batch_size
@@ -194,11 +194,10 @@ class YoloDetectionTrt:
 
         # 4 stage
         self.stride = [8., 16., 32., 64.]
-        self.anchor = np.array([[9., 11., 21., 19., 17., 41.], [43., 32., 39., 70., 86., 64.],
-                                [65., 131., 134., 130., 120., 265.], [282., 180., 247., 354., 512., 387.]], dtype=np.float32)
-
-        # self.anchor = np.array([[19, 27, 44, 40, 38, 94], [96, 68, 86, 152,  80, 137],
-        #                         [140, 301, 303, 264, 238, 542 ], [436, 615, 739, 380, 925, 792 ]], dtype=np.float32)
+        self.anchor = np.array([[8.11719,  13.75000,  12.44531,  28.70312,  21.34375,  36.78125],
+                                [24.82812,  61.81250,  36.43750,  91.81250,  73.18750,  96.81250],
+                                [58.31250, 144.87500,  82.62500, 201.12500, 163.37500, 160.75000],
+                                [119.75000, 306.50000, 195.37500, 316.00000, 338.75000, 396.50000]], dtype=np.float32)
 
         self.anchor_grid = self.anchor.reshape(len(self.stride), 1, -1, 1, 1, 2)
         self.max_det = 300
@@ -359,8 +358,7 @@ def trt_infer_video(onnx_path, video_path):
     cap.release()
 
 
-def trt_infer_images(onnx_path, image_path):
-    batch_size = 2
+def trt_infer_images(onnx_path, image_path, batch_size=1):
     yolo_detector = YoloDetectionTrt(onnx_path, batch_size)
     confidents = np.arange(1, 10)*0.1
 
@@ -415,4 +413,4 @@ if __name__=="__main__":
     image_path = "/home/liyongjing/Egolee/programs/yolov5-master_1/inference/images"
     trt_infer_images(onnx_path, image_path)
     # onnx_infer_video()
-    logger.info("End Trt Infer...") 
+    logger.info("End Trt Infer...")
